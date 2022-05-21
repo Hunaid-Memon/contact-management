@@ -28,7 +28,7 @@ router.get('/', auth , async (req, res) => {
 // @route   POST api/contacts
 // @desc    Add a new contact
 // @access  Private
-router.post('/', [ auth [
+router.post('/', [ auth, [
     check('name', 'Name is required').not().isEmpty()
 ] ], async (req, res) => {
     const errors = validationResult(req);
