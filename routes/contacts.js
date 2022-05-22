@@ -94,10 +94,8 @@ router.put('/:id', auth, async (req, res) => {
         res.json(contact);
         
     } catch(err) {
-
         console.error(err.message);
         res.status(500).send('Server Error');
-        
     }
 
 });
@@ -108,31 +106,49 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
 
     try {
-        
+
         let contact = await Contact.findById(req.params.id);
 
-        // Check if the contact exists
-        if(!contact) return res.status(404).json({ msg: 'This contact does not exists' });
+        // check if contact exist
+        if(!contact) return res.status(404).json({ msg: 'This contact does not exist' });
 
-        // If the contact exists, then make sure the currently signed in user owns the contact
+        // if the contact exist, then make sure the currently sign in user own the contact
         if(contact.user.toString() !== req.user.id) {
-            return res.status(401).json({ msg: 'You do not have a correct authorization to delete the contact' })
-
-            // find and remove the contact from mongoDB
-
-            await Contact.findByIdAndRemove(req.params.id)
-
-            // Return a confirmation message
-            res.json({ msg: 'This contact has been removed' })
+            return res.status(401).json({ msg: 'You do not have the correct authorization to update this contact' });
         }
 
+        await Contact.findByIdAndRemove(req.params.id)
 
-    } catch(err) {
+        res.json({ msg: 'Contact has been removed' });
         
+    } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
-
     }
+
+
+    // try {
+        
+    //     let contact = await Contact.findById(req.params.id);
+
+    //     // Check if the contact exists
+    //     if(!contact) return res.status(404).json({ msg: 'This contact does not exists' });
+
+    //     // If the contact exists, then make sure the currently signed in user owns the contact
+    //     if(contact.user.toString() !== req.user.id) {
+    //         return res.status(401).json({ msg: 'You do not have a correct authorization to delete the contact' })
+
+    //         // find and remove the contact from mongoDB
+
+    //         await Contact.findByIdAndRemove(req.params.id)
+
+    //         // Return a confirmation message
+    //         res.json({ msg: 'This contact has been removed' })
+    //     }
+    // } catch(err) {
+    //     console.error(err.message);
+    //     res.status(500).send('Server Error');
+    // }
 });
 
 module.exports = router;
