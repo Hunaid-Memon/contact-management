@@ -22,22 +22,22 @@ const ContactState = props => {
         contacts: [
             {
                 id: 1,
-                name: 'Adil',
-                email: 'adil@gmail.com',
+                name: 'Hunaid',
+                email: 'hunaid@gmail.com',
                 phone: '111-111-1111',
                 type: 'personal'
             },
             {
                 id: 2,
-                name: 'Zia',
-                email: 'zia@gmail.com',
+                name: 'Hadi',
+                email: 'hadi@gmail.com',
                 phone: '222-222-2222',
                 type: 'personal'
             },
             {
                 id: 3,
-                name: 'Zeeshan',
-                email: 'zeeshan@gmail.com',
+                name: 'Yousuf',
+                email: 'yousuf@gmail.com',
                 phone: '333-333-3333',
                 type: 'professional'
             }
