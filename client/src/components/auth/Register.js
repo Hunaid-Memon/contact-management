@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../context/auth/authContext'
 
 const Register = () => {
+    const authContext = useContext(AuthContext);
+
+    const { register, error, clearErrors } = authContext
 
     const [user, setUser] = useState({
         name: '',
@@ -14,7 +18,12 @@ const Register = () => {
     const onChange = e => setUser({...user, [e.target.name]: e.target.value})
     
     const onSubmit = e => {
-        e.preventDefault()
+        e.preventDefault();
+        register({
+            name,
+            email,
+            password
+        })
     }
 
     return(
