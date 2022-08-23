@@ -1,10 +1,21 @@
-import React, { useContext, useState } from 'react';
-import AuthContext from '../../context/auth/authContext'
+import React, { useContext, useEffect, useState } from 'react';
+import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alert/alertContext';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
+    const alertContext = useContext(AlertContext);
 
-    const { register, error, clearErrors } = authContext
+    const { register, error, clearErrors } = authContext;
+    const {setAlert } = alertContext;
+
+    useEffect(() => {
+        if (error === 'A User with this email already exists') {
+            setAlert(error, 'danger');
+            clearErrors();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[error])
 
     const [user, setUser] = useState({
         name: '',
@@ -19,11 +30,17 @@ const Register = () => {
     
     const onSubmit = e => {
         e.preventDefault();
-        register({
-            name,
-            email,
-            password
-        })
+        if (name === '' || email === '' || password === '') {
+            setAlert('Please enter all fields', 'danger');
+        } else if (password !== password2) {
+            setAlert('Password and Confirm Password do not match', 'danger')
+        } else {
+            register({
+                name,
+                email,
+                password
+            })
+        }
     }
 
     return(
