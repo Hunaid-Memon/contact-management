@@ -10,16 +10,16 @@ const Register = props => {
     const {setAlert } = alertContext;
 
     useEffect(() => {
-        if (isAuthenticated) {
-            props.history.push('/')
-        }
-        
-        if (error === 'A User with this email already exists') {
-            setAlert(error, 'danger');
-            clearErrors();
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[error])
+      if (isAuthenticated) {
+        props.history.push("/");
+      }
+
+      if (error === "A User with this email already exists") {
+        setAlert(error, "danger");
+        clearErrors();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error, isAuthenticated, props.history]);
 
     const [user, setUser] = useState({
         name: '',
